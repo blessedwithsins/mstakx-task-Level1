@@ -57,9 +57,13 @@ kubectl top po --all-namespaces
 List of documentation followed for this task:-
 
 https://kubernetes.io/docs/tutorials/stateless-application/guestbook/
+
 https://cloud.google.com/community/tutorials/nginx-ingress-gke
+
 https://github.com/helm/helm/blob/master/docs/install.md
+
 https://itnext.io/save-costs-in-your-kubernetes-cluster-with-5-open-source-projects-7f53899a1429
+
 https://github.com/linuxacademy/metrics-server
 
 Q. What was the node size chosen for the Kubernetes nodes? And why?
