@@ -34,6 +34,13 @@ kubectl create ns production
 
 #Deploy Ingress Controller
 
+curl -o get_helm.sh https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get
+chmod +x get_helm.sh
+./get_helm.sh
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+helm init --service-account tiller
+helm install --name nginx-ingress stable/nginx-ingress --set rbac.create=true --set controller.publishService.enabled=true --namespace=kube-system
 
 #Deploying application in Staging/Production namespaces
 
@@ -41,4 +48,21 @@ git clone https://github.com/kubernetes/examples.git
 cd examples
 kubectl -n staging apply -f frontend-*.yaml redis-*.yaml
 kubectl -n production apply -f frontend-*.yaml redis-*.yaml 
+
+#Expose application for Staging/Production namespaces
+
+kubectl -n staging apply -f staging-frontend-ingress.yaml
+kubectl -n production apply -f production-frontend-ingress.yaml 
+
+#Implement HPA in Staging/Production Namespaces
+
+kubectl -n production autoscale deployment frontend --cpu-percent=90 --min=1 --max=3
+kubectl -n staging autoscale deployment frontend --cpu-percent=90 --min=1 --max=3
+
+#Deploy metrics-server to monitor cluster components and application
+
+git clone https://github.com/linuxacademy/metrics-server
+kubectl apply -f ~/metrics-server/deploy/1.8+/
+kubectl get --raw /apis/metrics.k8s.io/
+kubectl top po --all-namespaces
 
