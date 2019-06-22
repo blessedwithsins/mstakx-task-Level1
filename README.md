@@ -1,5 +1,5 @@
 # mstakx-tasks
-1. Once kubeadm-install script has run successfully on master node, apply Network Plugin & run rest of the commands as normal user
+1. Once kubeadm-install-master script has run successfully on master node, apply Network Plugin & run rest of the commands as normal user
 
 Need to run as sudo:-
 
