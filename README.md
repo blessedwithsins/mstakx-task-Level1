@@ -21,8 +21,7 @@ If you're unable to find the token, please run below command to generate a new o
 
 kubeadm token create --print-join-command
 
-3. To create namespaces, we can use imperative way. Both are described below:-
-
+3. To create namespaces, we can use imperative way via below command:- 
 kubectl create ns staging
 
 kubectl create ns production
