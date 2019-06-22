@@ -67,6 +67,7 @@ kubectl -n staging autoscale deployment frontend --cpu-percent=90 --min=1 --max=
 #Deploy metrics-server to monitor cluster components and application
 
 git clone https://github.com/linuxacademy/metrics-server
+sleep 30
 kubectl apply -f ~/metrics-server/deploy/1.8+/
 kubectl get --raw /apis/metrics.k8s.io/
 sleep 90
