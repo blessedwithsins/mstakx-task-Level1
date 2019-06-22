@@ -24,6 +24,7 @@ kubeadm token create --print-join-command
 3. To create namespaces, we can use imperative way. Both are described below:-
 
 kubectl create ns staging
+
 kubectl create ns production
 
 
