@@ -40,14 +40,19 @@ chmod +x get_helm.sh
 kubectl create serviceaccount --namespace kube-system tiller
 kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
 helm init --service-account tiller
+sleep 90
 helm install --name nginx-ingress stable/nginx-ingress --set rbac.create=true --set controller.publishService.enabled=true --namespace=kube-system
 
 #Deploying application in Staging/Production namespaces
 
 git clone https://github.com/kubernetes/examples.git
-cd examples
-kubectl -n staging apply -f frontend-*.yaml redis-*.yaml
-kubectl -n production apply -f frontend-*.yaml redis-*.yaml 
+cd examples/guestbook
+kubectl -n staging apply -f redis-master-deployment.yaml -f redis-master-service.yaml 
+kubectl -n staging apply -f redis-slave-deployment.yaml -f redis-slave-service.yaml
+kubectl -n staging apply -f frontend-deployment.yaml -f frontend-service.yaml
+kubectl -n production apply -f redis-master-deployment.yaml -f redis-master-service.yaml 
+kubectl -n production apply -f redis-slave-deployment.yaml -f redis-slave-service.yaml
+kubectl -n production apply -f frontend-deployment.yaml -f frontend-service.yaml
 
 #Expose application for Staging/Production namespaces
 
@@ -64,5 +69,6 @@ kubectl -n staging autoscale deployment frontend --cpu-percent=90 --min=1 --max=
 git clone https://github.com/linuxacademy/metrics-server
 kubectl apply -f ~/metrics-server/deploy/1.8+/
 kubectl get --raw /apis/metrics.k8s.io/
+sleep 90
 kubectl top po --all-namespaces
 
