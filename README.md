@@ -26,4 +26,29 @@ kubectl create ns staging
 
 kubectl create ns production
 
+4. Installing guest-book application on both namespaces as below:-
+
+git clone https://github.com/kubernetes/examples.git
+
+After cloning of repository, apply only the necessary files via below command:-
+
+kubectl -n staging apply -f examples/
+
+kubectl -n production apply -f examples/
+
+5/6. Create Ingress yaml to expose application service via hostname. Files are uploaded in repository master branch. 
+
+7. Horizontal pod autoscaler can be created via below command:-
+
+kubectl -n production autoscale deployment frontend --cpu-percent=90 --min=1 --max=3
+
+kubectl -n staging autoscale deployment frontend --cpu-percent=90 --min=1 --max=3
+
+List of documentation followed for this task:-
+
+https://kubernetes.io/docs/tutorials/stateless-application/guestbook/
+https://cloud.google.com/community/tutorials/nginx-ingress-gke
+https://github.com/helm/helm/blob/master/docs/install.md
+
+
 
