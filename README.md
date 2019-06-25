@@ -38,7 +38,7 @@ A. I have used metrics-server here but we can use tools like Datadog, Instana, P
 
 Q. What additional components / plugins would you install on the cluster to manage it better? 
 
-A. 
+A. I would go for Calico as Network plugin for it's wide-spread support and added functionality like Network policies. We can use plugins for Jenkins, Cluster Autoscaler & Vertical pod scaling. Also, in addition components like Prometheus, Grafana, ELK stack/Instana, CoreDNS can be used for betterment. 
 
 
 
